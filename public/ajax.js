@@ -1,3 +1,4 @@
+
 async function ajaxPoiRegionSearch(poiRegion) {
     const response = await fetch(`http://localhost:3000/poi/region/${poiRegion}`);
     const results = await response.json();
@@ -12,10 +13,15 @@ async function ajaxPoiRegionSearch(poiRegion) {
         <td>${poi.region}</td>
         <td>${poi.description}</td>
         <td>${poi.recommendations}</td>
-        <td><button id="recommend">Recommend</button></td>
+        <td><button id="recommendBtn">Recommend</button></td>
         </tr>`
     });
     html += `</table>`;
+    //                  **************************** how to reach the button inside the async function**************************
+    document.getElementById('recommendBtn').addEventListener('click', () => {
+        console.log("working");
+
+    });
     document.getElementById('results').innerHTML = html;
 };
 // Make the AJAX run when we click a button
@@ -24,3 +30,11 @@ document.getElementById('ajaxButton').addEventListener('click', () => {
     const poiRegion = document.getElementById('poiRegion').value;
     ajaxPoiRegionSearch(poiRegion);
 });
+// Make the AJAX run when we click recommend button
+
+// async function ajaxRecommend(id){
+//     const recommend = await fetch(`http://localhost:3000/poi/poidb/${id}/recommend`);
+//     const result = await response.json();
+
+// }
+
