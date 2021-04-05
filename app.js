@@ -22,7 +22,7 @@ con.connect(err => {
     } else {
         // Once we have successfully connected to MySQL, we can setup our
         // routes, and start the server.
-        console.log('connected to mysql ok');
+        console.log('connected to mysql');
 
         // now set up the routes...
         //app.get('/songs/:name', (req, res) => {           <- needed???
@@ -59,6 +59,7 @@ app.get('/poi/region/:region', (req, res) => {
 });
 
 //Query to add a POI
+//this will need to pass the form data to a json object and then POST it
 app.post('/poi/poidb/create', (req, res) => {
     con.query('INSERT INTO poidb(name, type, country, region, description, recommendations) VALUES (?,?,?,?,?,?)',
         [req.body.name, req.body.type, req.body.country, req.body.region, req.body.description, req.body.recommendations],
@@ -85,3 +86,14 @@ app.post('/poi/poidb/:id/recommend', (req, res) => {
         });
 });
 
+// Query to return POI recommendations
+app.get('/poi/poidb/:id', (req, res) => {
+    con.query(`SELECT recommendations FROM poidb WHERE id=?`,
+        [req.params.id], (error, results, fields) => {
+            if (error) {
+                res.status(500).json({ error: error });
+            } else {
+                res.json(results);
+            }
+        });
+});

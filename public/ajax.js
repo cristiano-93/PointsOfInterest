@@ -1,40 +1,35 @@
+ async function recommend(id, locationId) {
+    await fetch(`http://localhost:3000/poi/poidb/${id}/recommend`, {method:'POST'});
+    console.log(locationId)
+    // const response = await fetch(`http://localhost:3000/poi/poidb/${id}`)
+    // const result = await response.json();
+    // console.log(result)
+};
 
 async function ajaxPoiRegionSearch(poiRegion) {
     const response = await fetch(`http://localhost:3000/poi/region/${poiRegion}`);
     const results = await response.json();
-    // Loop through the array of JSON objects and add the results to a <div>
+    // Looping through the array of JSON objects and adding the results to a <div>
     let html = "<table> <tr> <th>Name</th> <th>Type</th> <th>Country</th> <th>Region</th> <th>Description</th> <th>Recommendations</th>";
+    let locationId = 1;
     results.forEach(poi => {
+        const result = poi.recommendations;
         html += `
         <tr>
         <td>${poi.name}</td>
         <td>${poi.type}</td>
         <td>${poi.country}</td>
         <td>${poi.region}</td>
-        <td>${poi.description}</td>
-        <td>${poi.recommendations}</td>
-        <td><button id="recommendBtn">Recommend</button></td>
+        <td>${poi.description}</td>        
+        <td id="location${locationId}">${result}</td>
+        <td ><button onclick="recommend(${poi.ID},location${locationId++})">Recommend</button></td>
         </tr>`
     });
     html += `</table>`;
-    //                  **************************** how to reach the button inside the async function**************************
-    document.getElementById('recommendBtn').addEventListener('click', () => {
-        console.log("working");
-
-    });
     document.getElementById('results').innerHTML = html;
 };
-// Make the AJAX run when we click a button
 document.getElementById('ajaxButton').addEventListener('click', () => {
-    // Read the product type from a text field
     const poiRegion = document.getElementById('poiRegion').value;
     ajaxPoiRegionSearch(poiRegion);
 });
-// Make the AJAX run when we click recommend button
-
-// async function ajaxRecommend(id){
-//     const recommend = await fetch(`http://localhost:3000/poi/poidb/${id}/recommend`);
-//     const result = await response.json();
-
-// }
-
+//<td><button id="recommendBtn" onclick="recommend(${poi.ID})">Recommend</button></td>
