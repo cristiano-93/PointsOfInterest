@@ -67,7 +67,7 @@ app.post('/poi/poidb/create', (req, res) => {
             if(error) {
                 res.status(500).json({error: error});
             } else {
-                res.json({success: 1});
+                res.json({'message':'successfully created'});
             } 
         });
 })

@@ -13,27 +13,30 @@
 <body>
     <div class="container">
         <h1>Create a Point of Interest</h1>
-        <form action="" method="POST">
+        <form action="/poi/poidb/create" method="POST">
             <table>
                 <tr class="col-6">
-                    <td>Name: <input type="text" name="" id="name"></td>
-                    <td>Type: <input type="text" id="type"></td>
+                    <td>Name: <input type="text" name="name" id="name" value="test name"></td>
+                    <td>Type: <input type="text" name="type" id="type" value="test type"></td>
                 </tr>
                 <tr class="col-6">
-                    <td>Country: <input type="text" id="country"></td>
-                    <td>Region: <input type="text" id="region"></td>
+                    <td>Country: <input type="text" name="country" id="country" value="test country"></td>
+                    <td>Region: <input type="text" name="region" id="region" value="test region"></td>
                 </tr>
                 <tr class="col-6">
-                    <td>Coordinates: Longitude -> <input type="number" id="lon"> Latitude -> <input type="number"
-                            id="lat">
+                    <td>Coordinates: Longitude -> <input type="number" name="lon" id="lon" value="30"> Latitude ->
+                        <input type="number" name="lat" id="lat" value="30">
                     </td>
                 </tr>
                 <tr class="col-6">
-                    <td>Description: <input type="text" id="description"></td>
+                    <td>Description: <input type="text" name="description" id="description" value="test description">
+                    </td>
                 </tr>
             </table>
+            <button type="submit">Submit</button>
         </form>
-        <button type="submit">Create</button>
+        <a href="./index.html">Home</a>
+        
     </div>
 </body>
 
