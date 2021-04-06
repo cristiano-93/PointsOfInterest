@@ -61,14 +61,25 @@ app.get('/poi/region/:region', (req, res) => {
 //Query to add a POI
 //this will need to pass the form data to a json object and then POST it
 app.post('/poi/poidb/create', (req, res) => {
-    con.query('INSERT INTO poidb(name, type, country, region, description, recommendations) VALUES (?,?,?,?,?,?)',
-        [req.body.name, req.body.type, req.body.country, req.body.region, req.body.description, req.body.recommendations],
+    con.query('INSERT INTO poidb(name, type, country, region, description) VALUES (?,?,?,?,?)',
+        [req.body.name, req.body.type, req.body.country, req.body.region, req.body.description],
         (error, results, fields) => {
-            if(error) {
-                res.status(500).json({error: error});
-            } else {
-                res.json({'message':'successfully created'});
-            } 
+            if (error) {
+                res.status(500).json({ error: error });
+            } else if (req.body.name == "") {
+                res.status(500).json({ 'message': 'Please insert a name' })
+            } else if (req.body.type == "") {
+                res.status(500).json({ 'message': 'Please insert a type' })
+            } else if (req.body.country == "") {
+                res.status(500).json({ 'message': 'Please insert a country' })
+            } else if (req.body.region == "") {
+                res.status(500).json({ 'message': 'Please insert a region' })
+            } else if (req.body.description == "") {
+                res.status(500).json({ 'message': 'Please insert a description' })
+            }
+            else {
+                res.json({ 'message': 'successfully created' });
+            }
         });
 })
 

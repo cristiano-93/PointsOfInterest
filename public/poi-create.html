@@ -16,20 +16,20 @@
         <form action="/poi/poidb/create" method="POST">
             <table>
                 <tr class="col-6">
-                    <td>Name: <input type="text" name="name" id="name" value="test name"></td>
-                    <td>Type: <input type="text" name="type" id="type" value="test type"></td>
+                    <td>Name: <input type="text" name="name" id="name" value="test name" required></td>
+                    <td>Type: <input type="text" name="type" id="type" value="test type" required></td>
                 </tr>
                 <tr class="col-6">
-                    <td>Country: <input type="text" name="country" id="country" value="test country"></td>
-                    <td>Region: <input type="text" name="region" id="region" value="test region"></td>
+                    <td>Country: <input type="text" name="country" id="country" value="test country" required></td>
+                    <td>Region: <input type="text" name="region" id="region" value="test region" required></td>
                 </tr>
                 <tr class="col-6">
-                    <td>Coordinates: Longitude -> <input type="number" name="lon" id="lon" value="30"> Latitude ->
-                        <input type="number" name="lat" id="lat" value="30">
+                    <td>Coordinates: Longitude -> <input type="number" name="lon" id="lon" value="30" required> Latitude ->
+                        <input type="number" name="lat" id="lat" value="30" required>
                     </td>
                 </tr>
                 <tr class="col-6">
-                    <td>Description: <input type="text" name="description" id="description" value="test description">
+                    <td>Description: <input type="text" name="description" id="description" value="test description" required>
                     </td>
                 </tr>
             </table>
