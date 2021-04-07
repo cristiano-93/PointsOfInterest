@@ -54,4 +54,40 @@ document.getElementById('ajaxButton').addEventListener('click', () => {
     const poiRegion = document.getElementById('poiRegion').value;
     ajaxPoiRegionSearch(poiRegion);
 });
-//<td><button id="recommendBtn" onclick="recommend(${poi.ID})">Recommend</button></td>
+
+async function login(){
+    const body = {
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value
+    }    
+    const response = await fetch("/login", {method:"POST",headers:{'Content-type': 'application/json'},body:JSON.stringify(body)});
+
+    const results = await response.json();
+    if(results){
+        document.getElementById('loginBanner').innerHTML = `Logged in as ${results.username}`;
+    } else{
+        window.alert("could not log in")
+    }
+};
+
+document.getElementById('loginBtn').addEventListener('click', () => {
+    login(username, password);
+    console.log(password+username);
+});
+
+async function logout(){
+    const response = await fetch("/logout", {method:"POST"});
+    if(response.status==200){
+        const results = await response.json();
+        console.log(results);
+        document.getElementById('loginBanner').innerHTML = `You have been logged out`;
+        document.getElementById('logoutBtn').style.display = "none";
+        // document.getElementById('message').style.display = "none";
+        // document.getElementById('loginForm').style.display="block";
+    } else{
+        window.alert("could not log out")
+    }
+};
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    logout();
+});

@@ -65,14 +65,12 @@ app.post('/login', (req, res) => {
                 res.status(500).json({ error: error });
                 console.log(error)
             } else {
-                console.log(results)
-                console.log(req.body.username)
-                console.log(req.body.password)
                 if (results.length == 1) {
                     req.session.username = req.body.username;
                     res.json({ "username": req.body.username });
                 } else {
-                    res.status(401).json({ error: "Incorrect login Info!" });
+                    window.alert("incorrect login info");
+                    //res.status(401).json({ error: "Incorrect login Info!" });
                 }
             }
         });
@@ -89,8 +87,7 @@ app.get('/login', (req, res) => {
     res.json({ username: req.session.username || null });
 });
 
-
-// Middleware which protects any routes using POST or DELETE from access by users who are are not logged in
+//Middleware which protects any routes using POST or DELETE from access by users who are are not logged in
 app.use((req, res, next) => {
     if (["POST", "DELETE"].indexOf(req.method) == -1) {
         next();
@@ -102,6 +99,7 @@ app.use((req, res, next) => {
         }
     }
 });
+
 // Query to return POI with same name
 app.get('/poi/name/:name', (req, res) => {
     con.query(`SELECT * FROM poidb WHERE name=?`,
