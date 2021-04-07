@@ -9,10 +9,14 @@ L.tileLayer
 const pos = [40.91842, -8.51741];
 map.setView(pos, 14);
 
-// map.on("click", e => {
-// 	// "e.latlng" is an object (of type L.LatLng) representing the mouse click 
-//     L.marker([e.latlng.lat,e.latlng.lng]).addTo(map);
-// });
+map.on("click", e => {
+	// "e.latlng" is an object (of type L.LatLng) representing the mouse click 
+    L.marker([e.latlng.lat,e.latlng.lng]).addTo(map);
+    document.getElementById('lat').value = e.latlng.lat;
+    document.getElementById('lon').value = e.latlng.lng;    
+});
+
+
 
 async function recommend(id, locationId) {
     await fetch(`http://localhost:3000/poi/poidb/${id}/recommend`, {method:'POST'});
@@ -22,11 +26,6 @@ async function recommend(id, locationId) {
 async function ajaxPoiRegionSearch(poiRegion) {
     const response = await fetch(`http://localhost:3000/poi/region/${poiRegion}`);
     const results = await response.json();
-
-
-    
-    
-
     // Looping through the array of JSON objects and adding the results to a <div>
     let html = "<table> <tr> <th>Name</th> <th>Type</th> <th>Country</th> <th>Region</th> <th>Description</th> <th>Recommendations</th>";
     let locationId = 1;

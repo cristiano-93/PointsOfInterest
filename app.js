@@ -1,9 +1,18 @@
+//                  Notes
+// -part D 9 not yet completed
+//
+//
+//
+//
+
 const http = require("http");
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql2');
+const expressSession = require('express-session');
+const MySQLStore = require('express-mysql-session')(expressSession);
 
 const con = mysql.createConnection({
     host: 'localhost',
@@ -11,29 +20,88 @@ const con = mysql.createConnection({
     database: 'poidb'
 });
 
+const sessionStore = new MySQLStore({}, con.promise());
+
 app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(cors());
+app.use(corsMiddleware);
 
 con.connect(err => {
     if (err) {
         console.log(`Error connecting to mysql: ${err}`);
-        process.exit(1); // Quit the Express server with an error code of 1
+        process.exit(1);
     } else {
-        // Once we have successfully connected to MySQL, we can setup our
-        // routes, and start the server.
         console.log('connected to mysql');
-
-        // now set up the routes...
-        //app.get('/songs/:name', (req, res) => {           <- needed???
-        // ...
-        //});
-
-        // listen on port 3000
         app.listen(3000);
     }
 });
 
+function corsMiddleware(req, res, next) {
+    res.set('Access-Control-Allow-Origin', '*');
+    next();
+}
+
+app.use(expressSession({
+    store: sessionStore,
+    secret: 'BinnieAndClyde',
+    resave: false,
+    saveUninitialized: false,
+    rolling: true,
+    unset: 'destroy',
+    proxy: true,
+    cookie: {
+        maxAge: 600000, // 600000 ms = 10 mins expiry time
+        httpOnly: false
+    }
+}));
+
+// Login route
+app.post('/login', (req, res) => {
+    console.log(req.body)
+    con.query(`SELECT * FROM poi_users WHERE username=? AND password=?`,
+        [req.body.username, req.body.password], (error, results, fields) => {
+            if (error) {
+                res.status(500).json({ error: error });
+                console.log(error)
+            } else {
+                console.log(results)
+                console.log(req.body.username)
+                console.log(req.body.password)
+                if (results.length == 1) {
+                    req.session.username = req.body.username;
+                    res.json({ "username": req.body.username });
+                } else {
+                    res.status(401).json({ error: "Incorrect login Info!" });
+                }
+            }
+        });
+});
+
+// Logout route
+app.post('/logout', (req, res) => {
+    req.session = null;
+    res.json({ 'success': 1 });
+});
+
+// 'GET' login route - useful for clients to obtain currently logged in user
+app.get('/login', (req, res) => {
+    res.json({ username: req.session.username || null });
+});
+
+
+// Middleware which protects any routes using POST or DELETE from access by users who are are not logged in
+app.use((req, res, next) => {
+    if (["POST", "DELETE"].indexOf(req.method) == -1) {
+        next();
+    } else {
+        if (req.session.username) {
+            next();
+        } else {
+            res.status(401).json({ error: "You're not logged in. Go away!" });
+        }
+    }
+});
 // Query to return POI with same name
 app.get('/poi/name/:name', (req, res) => {
     con.query(`SELECT * FROM poidb WHERE name=?`,
@@ -78,7 +146,8 @@ app.post('/poi/poidb/create', (req, res) => {
                 res.status(500).json({ 'message': 'Please insert a description' })
             }
             else {
-                res.json({ 'message': 'successfully created' });
+                console.log("New Point of Interest has been created")
+                //res.json({ 'message': 'successfully created' });
             }
         });
 })
