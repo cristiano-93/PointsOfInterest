@@ -10,15 +10,17 @@
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel='stylesheet' href='https://unpkg.com/leaflet@1.7.1/dist/leaflet.css' />
     <script type='text/javascript' src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js'></script>
-
+    <style>
+        .row{padding: 10px;}
+    </style>
 </head>
 
 <body>
     <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+        <a href="./poi-create.html" style="padding: 5px;">Create POI</a>
         <div id="loginBanner" class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Login
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login
             </button>
             <div class="dropdown-menu">
                 <form class="px-4 py-3" action="" method="POST">
@@ -38,52 +40,104 @@
             </div>
         </div>
         <div>
-            
-                <button type="submit" id="logoutBtn" class="btn btn-primary">Logout</button>
-            
+
+            <button type="submit" id="logoutBtn" class="btn btn-primary">Logout</button>
+
         </div>
     </header>
 
 
     <div class="container">
-        <div class="row justify-content-center">
-            <h1 class="col-md">PointsOfInterest Project</h1>
-        </div>
-        <a href="./poi-create.html">Create POI</a>
-        <form action="get">
-            <input id="poiRegion" type="text">
-            <input id="ajaxButton" type="button" value="submit">
-        </form>
-        <div id="results"></div>
-        <div id="map1" style="width:600px; height:500px"> map</div>
-        <h3>Enter details of new Point of Interest</h1>
-            <div id="createPoi">
-                <form action="/poi/poidb/create" method="post">
-                    <table>
-                        <tr class="col-3">
-                            <td>Name: <input type="text" name="name" id="name" value="test name" required></td>
-                            <td>Type: <input type="text" name="type" id="type" value="test type" required></td>
-                        </tr>
-                        <tr class="col-3">
-                            <td>Country: <input type="text" name="country" id="country" value="test country" required>
-                            </td>
-                            <td>Region: <input type="text" name="region" id="region" value="test region" required>
-                            </td>
-                        </tr>
-                        <tr class="col-6">
-                            <td>Coordinates: Longitude -> <input name="lon" id="lon" value="" required> Latitude ->
-                                <input name="lat" id="lat" value="">
-                            </td>
-                        </tr>
-                        <tr class="col-6">
-                            <td>Description: <input type="text" name="description" id="description"
-                                    value="test description" required>
-                            </td>
-                        </tr>
-                    </table>
-                    <button type="submit">Submit</button>
+        <div class="row">
+            <!--row with map and form-->
+            <div class="col-md">
+                <!--col with title and search-->
+                <div class="justify-content-center">
+                    <h1>PointsOfInterest Project</h1>
+                </div>
+
+                <form action="get">
+                    <input id="poiRegion" type="text">
+                    <input id="ajaxButton" type="button" value="submit">
                 </form>
+
+                <div id="map1" style="width:600px; height:500px"> map</div>
             </div>
+            <div class="col-md" id="newMarker" style="display: block;">
+                <!--col with form-->
+                <!--change back to display:none-->
+                <div id="createPoi">
+                    <h3>Enter details of new Point of Interest</h3>
+                    <form action="/poi/poidb/create" method="post">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-3">
+                                    <input type="text" name="name" id="name" placeholder="Name" required>
+                                </div>
+                                <div class="col-2"></div>
+                                <div class="col-3">
+                                    <input type="text" name="type" id="type" placeholder="Type" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <input type="text" name="country" id="country" placeholder="Country" required>
+                                </div>
+                                <div class="col-2"></div>
+                                <div class="col-3">
+                                    <input type="text" name="region" id="region" placeholder="Region" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"></div>
+                                <div class="col-md">Coordinates</div>
+                                <div class="col-3"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"><input name="lon" id="lon" placeholder="Longitude"></div>
+                                <div class="col-2"></div>
+                                <div class="col-3"><input name="lat" id="lat" placeholder="Latitude"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"><input type="text" name="description" id="description"
+                                    placeholder="Description" required></div>
+                                <div class="col-2"></div>
+                                <div class="col-3"></div>
+                            </div>
+                        </div>
+
+
+
+                        <table>
+                            <tr class="col-3">
+                                <td>Name: <input type="text" name="name" id="name" value="test name" required></td>
+                                <td>Type: <input type="text" name="type" id="type" value="test type" required></td>
+                            </tr>
+                            <tr class="col-3">
+                                <td>Country: <input type="text" name="country" id="country" value="test country"
+                                        required>
+                                </td>
+                                <td>Region: <input type="text" name="region" id="region" value="test region" required>
+                                </td>
+                            </tr>
+                            <tr class="col-6">
+                                <td>Coordinates: Longitude -> <input name="lon" id="lon" value="" required> Latitude ->
+                                    <input name="lat" id="lat" value="">
+                                </td>
+                            </tr>
+                            <tr class="col-6">
+                                <td>Description: <input type="text" name="description" id="description"
+                                        value="test description" required>
+                                </td>
+                            </tr>
+                        </table>
+                        <button type="submit">Submit</button>
+                    </form>
+                    <button id="hide">Hide</button>
+                </div>
+            </div>
+        </div>
+        <div id="results"></div>
     </div>
     <script src="ajax.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
