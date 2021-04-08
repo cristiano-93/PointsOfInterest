@@ -95,7 +95,8 @@ app.use((req, res, next) => {
         if (req.session.username) {
             next();
         } else {
-            res.status(401).json({ error: "You're not logged in. Go away!" });
+            res.status(401).json({ error: "You must be logged in" });
+            console.log("not logged in")
         }
     }
 });
@@ -124,12 +125,27 @@ app.get('/poi/region/:region', (req, res) => {
         });
 });
 
+// Query to add a review
+app.post('/poi/poidb/poi_reviews/addreview', (req, res) => {
+    con.query('INSERT INTO poi_reviews(poi_id,review) VALUES (?,?)',
+        [req.body.poi_id, req.body.review], (error, results, fields) => {
+            console.log("poi_id: "+req.body.poi_id)
+            console.log("review: " +req.body.review) // these 2 console logs seem to work properly
+            if (error) {
+                res.status(500).json({ error: error });
+            }
+            else {
+                console.log("A Review has been created")
+            }
+        });
+})
+
 //Query to add a POI
-//this will need to pass the form data to a json object and then POST it
 app.post('/poi/poidb/create', (req, res) => {
     con.query('INSERT INTO poidb(name, type, country, region, description) VALUES (?,?,?,?,?)',
         [req.body.name, req.body.type, req.body.country, req.body.region, req.body.description],
         (error, results, fields) => {
+            console.log("poi name: "+req.body.name)
             if (error) {
                 res.status(500).json({ error: error });
             } else if (req.body.name == "") {
@@ -145,7 +161,7 @@ app.post('/poi/poidb/create', (req, res) => {
             }
             else {
                 console.log("New Point of Interest has been created")
-                //res.json({ 'message': 'successfully created' });
+                res.json({ success: 1 });
             }
         });
 })
@@ -155,6 +171,7 @@ app.post('/poi/poidb/:id/recommend', (req, res) => {
     con.query('UPDATE poidb SET recommendations = recommendations+1 WHERE id=?',
         [req.params.id], (error, results, fields) => {
             if (error) {
+                console.log(error)
                 res.status(500).json({ error: error });
             } else if (results.affectedRows == 1) {
                 res.json({ 'message': 'Successfully recommended' });
@@ -175,3 +192,4 @@ app.get('/poi/poidb/:id', (req, res) => {
             }
         });
 });
+

@@ -11,7 +11,9 @@
     <link rel='stylesheet' href='https://unpkg.com/leaflet@1.7.1/dist/leaflet.css' />
     <script type='text/javascript' src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js'></script>
     <style>
-        .row{padding: 10px;}
+        .row {
+            padding: 10px;
+        }
     </style>
 </head>
 
@@ -68,7 +70,7 @@
                 <!--change back to display:none-->
                 <div id="createPoi" style="margin-top: 80px; ">
                     <h3>Enter details of new Point of Interest</h3>
-                    <form action="/poi/poidb/create" method="post">
+                    <form action="" method="post">
                         <div class="container">
                             <div class="row">
                                 <div class="col-3">
@@ -98,16 +100,42 @@
                                 <div class="col-3"><input name="lat" id="lat" placeholder="Latitude"></div>
                             </div>
                             <div class="row">
-                                <div class="col-lg center-block"><textarea name="description" id="description" cols="57" rows="8" placeholder="Description" required></textarea>
+                                <div class="col-lg center-block"><textarea name="description" id="description" cols="57"
+                                        rows="8" placeholder="Description" required></textarea>
+                                </div>
                             </div>
-                        </div>                    
-                        <button class="btn btn-primary" style="margin-left: 40px; float: inline-start;" type="submit">Submit</button>
+                            <button id="newPoi" class="btn btn-primary" style="margin-left: 40px; float: inline-start;"
+                                type="submit">Submit</button>
                     </form>
-                    <button class="btn btn-primary" style="margin-left: 100px; float:inline-end;" id="hide">Cancel</button>
+                    <button class="btn btn-primary" style="margin-left: 100px; float:inline-end;"
+                        id="hide">Cancel</button>
                 </div>
             </div>
         </div>
         <div id="results"></div>
+        <div id="reviewMessage"></div>
+        <div id="reviewDiv" style="display: none;">
+            <form action="" method="post">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm">
+                            <h4 style="margin-left: 50px;"> Create Review</h4>
+                            <h6>POI id: </h6>
+                            <input type="number" name="poi_id" id="poi_id" style="margin-left: 40px;"required disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md">
+                            <h6>Review: </h6>
+                            <textarea name="review" id="review" cols="50" rows="5" style="margin-left: 40px;" required></textarea>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="reviewBtn" type="submit" style="margin-left: 125px;">Add Review</button>
+            </form>
+            
+            <button class="btn btn-primary" id="reviewCancel" style="margin-left: 125px;">Cancel</button>
+        </div>
     </div>
     <script src="ajax.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

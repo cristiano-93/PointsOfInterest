@@ -24,15 +24,57 @@ map.on("click", e => {
     });
 });
 
+// adding a new Point of interest
+async function addPoi() {
+    const body = {
+        name: document.getElementById('name').value,
+        type: document.getElementById('type').value,
+        country: document.getElementById('country').value,
+        region: document.getElementById('region').value,
+        lat: document.getElementById('lat').value,
+        lon: document.getElementById('lon').value,
+        description: document.getElementById('description').value
+    }
+    const response = await fetch("/poi/poidb/create", { method: "POST", headers: { 'Content-type': 'application/json' }, body: JSON.stringify(body) });
+};
+document.getElementById('newPoi').addEventListener('click', () => {
+    addPoi()
+});
 
+// adding a new review
+async function addReview() {
+    const id = document.getElementById('poi_id').value
+    const reviewIn = document.getElementById('review').value
+    console.log(id)
+    console.log(reviewIn)
+    const body = {
+        poi_id: id,
+        review: reviewIn
+    }
+    const response = await fetch("/poi/poidb/poi_reviews/addreview", { method: "POST", headers: { 'Content-type': 'application/json' }, body: JSON.stringify(body) });
+};
+document.getElementById('reviewBtn').addEventListener('click', () => {
+    addReview()
+});
+async function addReviewId(id){
+    document.getElementById('reviewDiv').style.display = "block";
+    document.getElementById('poi_id').value = id;
+};
+document.getElementById('reviewBtn').addEventListener('click', () => {
+    document.getElementById('reviewMessage').value = "Review has been Created";
+});
+document.getElementById('reviewCancel').addEventListener('click', () => {
+    document.getElementById('reviewDiv').style.display = "none";
+});
 
-
-
+//recommend function
 async function recommend(id, locationId) {
     await fetch(`http://localhost:3000/poi/poidb/${id}/recommend`, { method: 'POST' });
     console.log(locationId)
-    document.getElementById('message').innerHTML = "Thank you";
+    //document.getElementById('message').innerHTML = "Thank you";  displaying even when not authorized
 };
+
+
 
 async function ajaxPoiRegionSearch(poiRegion) {
     const response = await fetch(`http://localhost:3000/poi/region/${poiRegion}`);
@@ -45,7 +87,7 @@ async function ajaxPoiRegionSearch(poiRegion) {
         const position = [poi.lat, poi.lon];
         const marker = L.marker(position).addTo(map);
         map.setView(position, 9);
-        marker.bindPopup(`This is the town of ${poi.name}. It is ${poi.description}`);
+        marker.bindPopup(`This is the town of ${poi.name}. It is ${poi.description} \n <button onclick="addReviewId(${poi.ID})" id="reviewBtn">Add a Review</button>`);
         html += `
         <tr>
         <td>${poi.name}</td>
@@ -67,6 +109,8 @@ document.getElementById('ajaxButton').addEventListener('click', () => {
     ajaxPoiRegionSearch(poiRegion);
 });
 
+
+// Login/out functions
 async function login() {
     const body = {
         username: document.getElementById('username').value,
@@ -81,7 +125,6 @@ async function login() {
         window.alert("could not log in")
     }
 };
-
 document.getElementById('loginBtn').addEventListener('click', () => {
     login(username, password);
     console.log(password + username);
