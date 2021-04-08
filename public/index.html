@@ -63,10 +63,10 @@
 
                 <div id="map1" style="width:600px; height:500px"> map</div>
             </div>
-            <div class="col-md" id="newMarker" style="display: block;">
+            <div class="col-md" id="newMarker" style="display: none;">
                 <!--col with form-->
                 <!--change back to display:none-->
-                <div id="createPoi">
+                <div id="createPoi" style="margin-top: 80px; ">
                     <h3>Enter details of new Point of Interest</h3>
                     <form action="/poi/poidb/create" method="post">
                         <div class="container">
@@ -89,8 +89,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-3"></div>
-                                <div class="col-md">Coordinates</div>
+                                <div class="col-md  center-block text-center">Coordinates</div>
                                 <div class="col-3"></div>
                             </div>
                             <div class="row">
@@ -99,41 +98,12 @@
                                 <div class="col-3"><input name="lat" id="lat" placeholder="Latitude"></div>
                             </div>
                             <div class="row">
-                                <div class="col-3"><input type="text" name="description" id="description"
-                                    placeholder="Description" required></div>
-                                <div class="col-2"></div>
-                                <div class="col-3"></div>
+                                <div class="col-lg center-block"><textarea name="description" id="description" cols="57" rows="8" placeholder="Description" required></textarea>
                             </div>
-                        </div>
-
-
-
-                        <table>
-                            <tr class="col-3">
-                                <td>Name: <input type="text" name="name" id="name" value="test name" required></td>
-                                <td>Type: <input type="text" name="type" id="type" value="test type" required></td>
-                            </tr>
-                            <tr class="col-3">
-                                <td>Country: <input type="text" name="country" id="country" value="test country"
-                                        required>
-                                </td>
-                                <td>Region: <input type="text" name="region" id="region" value="test region" required>
-                                </td>
-                            </tr>
-                            <tr class="col-6">
-                                <td>Coordinates: Longitude -> <input name="lon" id="lon" value="" required> Latitude ->
-                                    <input name="lat" id="lat" value="">
-                                </td>
-                            </tr>
-                            <tr class="col-6">
-                                <td>Description: <input type="text" name="description" id="description"
-                                        value="test description" required>
-                                </td>
-                            </tr>
-                        </table>
-                        <button type="submit">Submit</button>
+                        </div>                    
+                        <button class="btn btn-primary" style="margin-left: 40px; float: inline-start;" type="submit">Submit</button>
                     </form>
-                    <button id="hide">Hide</button>
+                    <button class="btn btn-primary" style="margin-left: 100px; float:inline-end;" id="hide">Cancel</button>
                 </div>
             </div>
         </div>
