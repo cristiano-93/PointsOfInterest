@@ -1,8 +1,8 @@
 //                  Notes
-// -part D 9 not yet completed
 //
-//
-//
+//      apply same changes to poi create form that were applied to review creating form
+//      try to fix the logout button being displayed when not logged in.
+//      style the header
 //
 
 const http = require("http");
@@ -99,18 +99,6 @@ app.use((req, res, next) => {
             console.log("not logged in")
         }
     }
-});
-
-// Query to return POI with same name
-app.get('/poi/name/:name', (req, res) => {
-    con.query(`SELECT * FROM poidb WHERE name=?`,
-        [req.params.name], (error, results, fields) => {
-            if (error) {
-                res.status(500).json({ error: error });
-            } else {
-                res.json(results);
-            }
-        });
 });
 
 // Query to return POI with same region

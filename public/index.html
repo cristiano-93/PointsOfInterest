@@ -51,7 +51,7 @@
 
     <div class="container">
         <div class="row">
-            <!--row with map and form-->
+            <!--row with map and search form-->
             <div class="col-md">
                 <!--col with title and search-->
                 <div class="justify-content-center">
@@ -60,17 +60,23 @@
 
                 <form action="get">
                     <input id="poiRegion" type="text">
-                    <input id="ajaxButton" type="button" value="submit">
+                    <input id="ajaxButton" type="button" value="submit" onclick="document.getElementById('reviewMessage').style.display = 'none'">
                 </form>
 
                 <div id="map1" style="width:600px; height:500px"> map</div>
             </div>
+            
             <div class="col-md" id="newMarker" style="display: none;">
                 <!--col with form-->
                 <!--change back to display:none-->
-                <div id="createPoi" style="margin-top: 80px; ">
+                
+                <div id="createPoi" style="margin-top: 80px; display: block;">
                     <h3>Enter details of new Point of Interest</h3>
-                    <form action="" method="post">
+                     <!-- New Point of Interest Form -->
+                    <form id="newPoiForm" action="" method="post" onsubmit="addPoi(),event.preventDefault(),
+                    document.getElementById('createPoi').style.display = 'none',
+                    window.alert('New Point of interest has been created'),
+                    document.getElementById('newPoiForm').reset()">
                         <div class="container">
                             <div class="row">
                                 <div class="col-3">
@@ -95,46 +101,56 @@
                                 <div class="col-3"></div>
                             </div>
                             <div class="row">
-                                <div class="col-3"><input name="lon" id="lon" placeholder="Longitude"></div>
+                                <div class="col-3"><input name="lon" id="lon" placeholder="Longitude" disabled required></div>
                                 <div class="col-2"></div>
-                                <div class="col-3"><input name="lat" id="lat" placeholder="Latitude"></div>
+                                <div class="col-3"><input name="lat" id="lat" placeholder="Latitude" disabled required></div>
                             </div>
                             <div class="row">
                                 <div class="col-lg center-block"><textarea name="description" id="description" cols="57"
                                         rows="8" placeholder="Description" required></textarea>
                                 </div>
                             </div>
+                            <button id="newPoi" class="btn btn-primary"
+                        style="margin-left: 40px; float: inline-start;">Submit</button>
                     </form>
-                    <button id="newPoi" class="btn btn-primary" style="margin-left: 40px; float: inline-start;"
-                                 >Submit</button> <!--check why this submit is doing it twice or include Ian's advice -->
                     <button class="btn btn-primary" style="margin-left: 100px; float:inline-end;"
                         id="hide">Cancel</button>
                 </div>
             </div>
         </div>
-        <div id="results"></div>
-        <div id="reviewMessage"></div>
+        <div class="row">
+            <div id="results"></div>
+        </div>
+        
         <div id="reviewDiv" style="display: none;">
-            <form action="" method="post">
+            <form action="" method="post" onsubmit="addReview(),event.preventDefault(),document.getElementById('reviewDiv').style.display = 'none',
+                document.getElementById('reviewMessage').style.display = 'block'">
                 <div class="container">
+                    <h5 style="color: green;font-weight:bold ; " id="reviewConfirm" style="display: none;">Review has
+                        been Created</h5>
                     <div class="row">
                         <div class="col-sm">
                             <h4 style="margin-left: 50px;"> Create Review</h4>
                             <h6>POI id: </h6>
-                            <input type="number" name="poi_id" id="poi_id" style="margin-left: 40px;"required disabled>
+                            <input type="number" name="poi_id" id="poi_id" style="margin-left: 40px;" required disabled>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md">
                             <h6>Review: </h6>
-                            <textarea name="review" id="review" cols="50" rows="5" style="margin-left: 40px;" required></textarea>
+                            <textarea name="review" id="review" cols="50" rows="5" style="margin-left: 40px;"
+                                required></textarea>
                         </div>
                     </div>
                 </div>
-                
+                <button class="btn btn-primary" type="submit" id="reviewBtn" style="margin-left: 125px;">Add
+                    Review</button>
             </form>
-            <button class="btn btn-primary" id="reviewBtn" style="margin-left: 125px;">Add Review</button>
+
             <button class="btn btn-primary" id="reviewCancel" style="margin-left: 125px;">Cancel</button>
+        </div>
+        <div class="row">
+            <div id="reviewMessage" style="display: none; color: green; font-weight: bold;">Review has been Created</div>
         </div>
     </div>
     <script src="ajax.js"></script>
