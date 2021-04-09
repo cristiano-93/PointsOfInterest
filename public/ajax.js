@@ -5,8 +5,8 @@ const attrib = "Map data copyright OpenStreetMap contributors, Open Database Lic
 L.tileLayer
     ("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         { attribution: attrib }).addTo(map);
-
-const pos = [50.90882, -1.40159];
+        
+const pos = [51.509528, -0.116579];
 map.setView(pos, 12);
 var theMarker = {};
 
@@ -52,19 +52,19 @@ async function addReview() {
         review: reviewIn
     }
     const response = await fetch("/poi/poidb/poi_reviews/addreview", { method: "POST", 
-    headers: { 'Content-type': 'application/json' }, body: JSON.stringify(body) });
-    
-    
-};
-async function addReviewId(id){
-    document.getElementById('reviewConfirm').style.display = "none";
-    document.getElementById('reviewDiv').style.display = "block";
-    document.getElementById('poi_id').value = id;
+    headers: { 'Content-type': 'application/json' }, body: JSON.stringify(body) });   
 };
 
-document.getElementById('reviewCancel').addEventListener('click', () => {
-    document.getElementById('reviewDiv').style.display = "none";
-});
+//      old code to be removed once everything is confirmed to be working as it should
+// async function addReviewId(id){
+//     document.getElementById('reviewConfirm').style.display = "none";
+//     document.getElementById('reviewDiv').style.display = "block";
+//     document.getElementById('poi_id').value = id;
+// };
+
+// document.getElementById('reviewCancel').addEventListener('click', () => {
+//     document.getElementById('reviewDiv').style.display = "none";
+// });
 
 //recommend function
 async function recommend(id, locationId) {
@@ -87,8 +87,17 @@ async function ajaxPoiRegionSearch(poiRegion) {
         const position = [poi.lat, poi.lon];
         const marker = L.marker(position).addTo(map);
         map.setView(position, 9);
+        //document.getElementById('newReviewDiv').style.display = "block";
+        
         marker.bindPopup(`This is the town of ${poi.name}. It is ${poi.description} \n 
-        <button onclick="addReviewId(${poi.ID})" id="reviewBtn">Add a Review</button>`);
+        <h6 style="margin-left: 50px">Add a Review</h6>\n
+        <input type="number" name="poi_id" id="poi_id" style="margin-left: 40px;" value="${poi.ID}" required disabled>
+        <button onclick="addReview(),event.preventDefault(),document.getElementById('reviewDiv').style.display = 'none',
+        document.getElementById('reviewMessage').style.display = 'block'">Submit</button>\n
+        <textarea name="review" id="review" cols="30" rows="3" style="margin-left: 40px;"required></textarea>
+        `);
+        
+
         html += `
         <tr>
         <td>${poi.name}</td>
