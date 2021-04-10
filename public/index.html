@@ -11,120 +11,169 @@
     <link rel='stylesheet' href='https://unpkg.com/leaflet@1.7.1/dist/leaflet.css' />
     <script type='text/javascript' src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js'></script>
     <style>
+        body {
+            align-content: center;
+        }
+        #bodyContainer {
+            width: fit-content;
+            text-align: center;
+        }
+        #navBar{
+            align-content: center;
+        }
+        #navbarNavMenu{
+            width: 300px;
+        }
         .row {
             padding: 10px;
+        }
+        #header {
+            width: fit-content;
+            margin: auto;
+
+        }
+        #title {
+            padding: 10px 0px 5px;
+        }
+        #searchForm{
+            padding: 5px 0px 10px;
+        }
+        #logoutBtn{
+            display: none;
         }
     </style>
 </head>
 
 <body>
-    <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
-        <a href="./poi-create.html" style="padding: 5px;">Create POI</a>
-        <div id="loginBanner" class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login
+    <div id="bodyContainer" class="container">
+        <nav id="navBar" class="navbar navbar-expand-lg navbar-light ">
+            <div class="container" id="header"></div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="dropdown-menu">
-                <form class="px-4 py-3" action="" method="POST">
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" class="form-control" name="username" id="username" placeholder="Username"
-                            value="kate">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="Password"
-                            value="kate123">
-                    </div>
-                </form>
-                <button type="submit" id="loginBtn" class="btn btn-primary">Login</button>
-                <div class="dropdown-divider"></div>
+            <div class="collapse navbar-collapse" id="navbarNavMenu">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="./index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./poi-create.html">Create POI</a>
+                    </li>
+                    <li id="loginBanner" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Login
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <form class="px-4 py-3" action="" method="POST">
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" name="username" id="username"
+                                        placeholder="Username" value="kate">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" name="password" id="password"
+                                        placeholder="Password" value="kate123">
+                                </div>
+                            </form>
+                            <button type="submit" id="loginBtn" class="btn btn-primary"
+                                style="margin-left: 40px;">Login</button>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <button type="submit" id="logoutBtn" class="btn btn-primary">Logout</button>
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </div>
-        <div>
-
-            <button type="submit" id="logoutBtn" class="btn btn-primary">Logout</button>
-
-        </div>
-    </header>
-
-
-    <div class="container">
-        <div class="row">
-            <!--row with map and search form-->
-            <div class="col-md">
-                <!--col with title and search-->
-                <div class="justify-content-center">
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div id="title" class="justify-content-center">
                     <h1>PointsOfInterest Project</h1>
                 </div>
-
-                <form action="get">
-                    <input id="poiRegion" type="text">
-                    <input id="ajaxButton" type="button" value="submit"><!-- onclick="document.getElementById('reviewMessage').style.display = 'none' -->
-                </form>
-
-                <div id="map1" style="width:600px; height:500px"> map</div>
             </div>
-            
-            <div class="col-md" id="newMarker" style="display: none;">
-                <!--col with form-->
-                <!--change back to display:none-->
-                
-                <div id="createPoi" style="margin-top: 80px; display: block;">
-                    <h3>Enter details of new Point of Interest</h3>
-                     <!-- New Point of Interest Form -->
-                    <form id="newPoiForm" action="" method="post" onsubmit="addPoi(),event.preventDefault(),
+            <div class="row">
+                <!--row with map and search form-->
+                <div class="col-md">
+                    <!--col with title and search-->
+                    
+
+                    <form id="searchForm" action="get">
+                        <input id="poiRegion" type="text">
+                        <input id="ajaxButton" type="button" value="submit">
+                        <!-- onclick="document.getElementById('reviewMessage').style.display = 'none' -->
+                    </form>
+
+                    <div id="map1" style="width:600px; height:500px"> map</div>
+                </div>
+
+                <div class="col-md" id="newMarker" style="display: none;">
+                    <!--col with form-->
+                    <!--change back to display:none-->
+
+                    <div id="createPoi" style="margin-top: 80px; display: block;">
+                        <h3>Enter details of new Point of Interest</h3>
+                        <!-- New Point of Interest Form -->
+                        <form id="newPoiForm" action="" method="post" onsubmit="addPoi(),event.preventDefault(),
                     document.getElementById('createPoi').style.display = 'none',
                     window.alert('New Point of interest has been created'),
                     document.getElementById('newPoiForm').reset()">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-3">
-                                    <input type="text" name="name" id="name" placeholder="Name" required>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <input type="text" name="name" id="name" placeholder="Name" required>
+                                    </div>
+                                    <div class="col-2"></div>
+                                    <div class="col-3">
+                                        <input type="text" name="type" id="type" placeholder="Type" required>
+                                    </div>
                                 </div>
-                                <div class="col-2"></div>
-                                <div class="col-3">
-                                    <input type="text" name="type" id="type" placeholder="Type" required>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <input type="text" name="country" id="country" placeholder="Country" required>
+                                    </div>
+                                    <div class="col-2"></div>
+                                    <div class="col-3">
+                                        <input type="text" name="region" id="region" placeholder="Region" required>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3">
-                                    <input type="text" name="country" id="country" placeholder="Country" required>
+                                <div class="row">
+                                    <div class="col-md  center-block text-center">Coordinates</div>
+                                    <div class="col-3"></div>
                                 </div>
-                                <div class="col-2"></div>
-                                <div class="col-3">
-                                    <input type="text" name="region" id="region" placeholder="Region" required>
+                                <div class="row">
+                                    <div class="col-3"><input name="lon" id="lon" placeholder="Longitude" disabled
+                                            required>
+                                    </div>
+                                    <div class="col-2"></div>
+                                    <div class="col-3"><input name="lat" id="lat" placeholder="Latitude" disabled
+                                            required>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md  center-block text-center">Coordinates</div>
-                                <div class="col-3"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3"><input name="lon" id="lon" placeholder="Longitude" disabled required></div>
-                                <div class="col-2"></div>
-                                <div class="col-3"><input name="lat" id="lat" placeholder="Latitude" disabled required></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg center-block"><textarea name="description" id="description" cols="57"
-                                        rows="8" placeholder="Description" required></textarea>
+                                <div class="row">
+                                    <div class="col-lg center-block"><textarea name="description" id="description"
+                                            cols="57" rows="8" placeholder="Description" required></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <button id="newPoi" class="btn btn-primary"
-                        style="margin-left: 40px; float: inline-start;">Submit</button>
-                    </form>
-                    <button class="btn btn-primary" style="margin-left: 100px; float:inline-end;"
-                        id="hide">Cancel</button>
+                                <button id="newPoi" class="btn btn-primary"
+                                    style="margin-left: 40px; float: inline-start;">Submit</button>
+                        </form>
+                        <button class="btn btn-primary" style="margin-left: 100px; float:inline-end;"
+                            id="hide">Cancel</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div id="results"></div>
-        </div>
+            <div class="row">
+                <div id="results"></div>
+            </div>
 
-        <!-- Code to be removed once everything is confirmed to be working as it should -->
+            <!-- Code to be removed once everything is confirmed to be working as it should -->
 
-        <!-- <div id="reviewDiv" style="display: none;">
+            <!-- <div id="reviewDiv" style="display: none;">
             <form action="" method="post" onsubmit="addReview(),event.preventDefault(),document.getElementById('reviewDiv').style.display = 'none',
                 document.getElementById('reviewMessage').style.display = 'block'">
                 <div class="container">
@@ -151,20 +200,21 @@
 
             <button class="btn btn-primary" id="reviewCancel" style="margin-left: 125px;">Cancel</button>
         </div> -->
-        <!-- <div class="row">
+            <!-- <div class="row">
             <div id="reviewMessage" style="display: none; color: green; font-weight: bold;">Review has been Created</div>
         </div> -->
+        </div>
+        <script src="ajax.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
     </div>
-    <script src="ajax.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 const map = L.map("map1");
 
-const attrib = "Map data copyright OpenStreetMap contributors, Open Database Licence";
+const attrib = "Map data copyright OpenStreetMap contributors, Open Database Licence, project by Cristiano";
 
 L.tileLayer
     ("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -130,7 +130,9 @@ async function login() {
 
     const results = await response.json();
     if (results) {
-        document.getElementById('loginBanner').innerHTML = `Logged in as ${results.username}`;
+        document.getElementById('loginBanner').innerHTML = `Logged in as ${results.username}`;        
+        document.getElementById('loginBanner').style.color = "green";
+        document.getElementById('logoutBtn').style.display = "block";
     } else {
         window.alert("could not log in")
     }
@@ -139,6 +141,8 @@ document.getElementById('loginBtn').addEventListener('click', () => {
     login(username, password);
     console.log(password + username);
 });
+
+
 
 async function logout() {
     const response = await fetch("/logout", { method: "POST" });
@@ -152,5 +156,6 @@ async function logout() {
     }
 };
 document.getElementById('logoutBtn').addEventListener('click', () => {
-    logout();
+    logout()
+    console.log("logged out");
 });

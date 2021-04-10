@@ -4,6 +4,7 @@
 //      try to fix the logout button being displayed when not logged in.
 //      style the header
 //      arranje the routes properly in seperate files
+//      fix the login/logout that if we change page it will ask for login even if already logged in
 //
 
 const http = require("http");
