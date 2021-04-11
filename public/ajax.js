@@ -36,8 +36,8 @@ async function addPoi() {
         lon: document.getElementById('lon').value,
         description: document.getElementById('description').value
     }
-    const response = await fetch("/poi/poidb/create", { method: "POST", headers: { 'Content-type': 'application/json' }, body: JSON.stringify(body) });
-
+    const response = await fetch("/poi/poidb/create", { method: "POST", 
+        headers: { 'Content-type': 'application/json' }, body: JSON.stringify(body) });
 };
 
 
@@ -55,17 +55,6 @@ async function addReview() {
     headers: { 'Content-type': 'application/json' }, body: JSON.stringify(body) });   
 };
 
-//      old code to be removed once everything is confirmed to be working as it should
-// async function addReviewId(id){
-//     document.getElementById('reviewConfirm').style.display = "none";
-//     document.getElementById('reviewDiv').style.display = "block";
-//     document.getElementById('poi_id').value = id;
-// };
-
-// document.getElementById('reviewCancel').addEventListener('click', () => {
-//     document.getElementById('reviewDiv').style.display = "none";
-// });
-
 //recommend function
 async function recommend(id, locationId) {
     await fetch(`http://localhost:3000/poi/poidb/${id}/recommend`, { method: 'POST' });
@@ -73,8 +62,6 @@ async function recommend(id, locationId) {
     
     document.getElementById('message').innerHTML = "Thank you";  //displaying even when not authorized
 };
-
-
 
 async function ajaxPoiRegionSearch(poiRegion) {
     const response = await fetch(`http://localhost:3000/poi/region/${poiRegion}`);

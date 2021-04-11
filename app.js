@@ -6,8 +6,8 @@
 //      arranje the routes properly in seperate files
 //      fix the login/logout that if we change page it will ask for login even if already logged in
 //
+//const http = require("http");
 
-const http = require("http");
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -154,7 +154,7 @@ app.post('/poi/poidb/create', (req, res) => {
                 res.json({ success: 1 });
             }
         });
-})
+});
 
 // Query to add a recommendation
 app.post('/poi/poidb/:id/recommend', (req, res) => {

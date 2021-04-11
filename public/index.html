@@ -14,31 +14,39 @@
         body {
             align-content: center;
         }
+
         #bodyContainer {
             width: fit-content;
             text-align: center;
         }
-        #navBar{
+
+        #navBar {
             align-content: center;
         }
-        #navbarNavMenu{
+
+        #navbarNavMenu {
             width: 300px;
         }
+
         .row {
             padding: 10px;
         }
+
         #header {
             width: fit-content;
             margin: auto;
 
         }
+
         #title {
             padding: 10px 0px 5px;
         }
-        #searchForm{
+
+        #searchForm {
             padding: 5px 0px 10px;
         }
-        #logoutBtn{
+
+        #logoutBtn {
             display: none;
         }
     </style>
@@ -100,7 +108,7 @@
                 <!--row with map and search form-->
                 <div class="col-md">
                     <!--col with title and search-->
-                    
+
 
                     <form id="searchForm" action="get">
                         <input id="poiRegion" type="text">
@@ -112,16 +120,13 @@
                 </div>
 
                 <div class="col-md" id="newMarker" style="display: none;">
-                    <!--col with form-->
-                    <!--change back to display:none-->
-
                     <div id="createPoi" style="margin-top: 80px; display: block;">
                         <h3>Enter details of new Point of Interest</h3>
                         <!-- New Point of Interest Form -->
                         <form id="newPoiForm" action="" method="post" onsubmit="addPoi(),event.preventDefault(),
-                    document.getElementById('createPoi').style.display = 'none',
-                    window.alert('New Point of interest has been created'),
-                    document.getElementById('newPoiForm').reset()">
+                            document.getElementById('createPoi').style.display = 'none',
+                            window.alert('New Point of interest has been created'),
+                            document.getElementById('newPoiForm').reset()">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-3">
