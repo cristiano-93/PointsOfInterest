@@ -78,10 +78,10 @@ async function ajaxPoiRegionSearch(poiRegion) {
         
         marker.bindPopup(`This is the town of ${poi.name}. It is ${poi.description} \n 
         <h6 style="margin-left: 50px">Add a Review</h6>\n
-        <input type="number" name="poi_id" id="poi_id" style="margin-left: 40px;" value="${poi.ID}" required disabled>
-        <button onclick="addReview(),event.preventDefault(),document.getElementById('reviewDiv').style.display = 'none',
+        POI ID: <input type="number" name="poi_id" id="poi_id" style="margin-left: 2px; width: 50px;" value="${poi.ID}" required disabled>
+        <button style="margin-left: 91px;" onclick="addReview(),event.preventDefault(),document.getElementById('reviewDiv').style.display = 'none',
         document.getElementById('reviewMessage').style.display = 'block'">Submit</button>\n
-        <textarea name="review" id="review" cols="30" rows="3" style="margin-left: 40px;"required></textarea>
+        <textarea name="review" id="review" cols="30" rows="3" style="margin-left: 40px; margin-top: 5px;" required></textarea>
         `);
         
 
@@ -107,13 +107,14 @@ document.getElementById('ajaxButton').addEventListener('click', () => {
 });
 
 
-// Login/out functions
+// Login function
 async function login() {
     const body = {
         username: document.getElementById('username').value,
         password: document.getElementById('password').value
     }
-    const response = await fetch("/login", { method: "POST", headers: { 'Content-type': 'application/json' }, body: JSON.stringify(body) });
+    const response = await fetch("/login", { method: "POST", headers: {
+         'Content-type': 'application/json' }, body: JSON.stringify(body) });
 
     const results = await response.json();
     if (results) {
@@ -129,8 +130,7 @@ document.getElementById('loginBtn').addEventListener('click', () => {
     console.log(password + username);
 });
 
-
-
+// Logout function
 async function logout() {
     const response = await fetch("/logout", { method: "POST" });
     if (response.status == 200) {

@@ -72,7 +72,6 @@ app.post('/login', (req, res) => {
                     res.json({ "username": req.body.username });
                 } else {
                     window.alert("incorrect login info");
-                    //res.status(401).json({ error: "Incorrect login Info!" });
                 }
             }
         });
@@ -120,7 +119,7 @@ app.post('/poi/poidb/poi_reviews/addreview', (req, res) => {
     con.query('INSERT INTO poi_reviews(poi_id,review) VALUES (?,?)',
         [req.body.poi_id, req.body.review], (error, results, fields) => {
             console.log("poi_id: "+req.body.poi_id)
-            console.log("review: " +req.body.review) // these 2 console logs seem to work properly
+            console.log("review: " +req.body.review) 
             if (error) {
                 res.status(500).json({ error: error });
             }
