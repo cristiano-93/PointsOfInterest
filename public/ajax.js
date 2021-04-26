@@ -73,7 +73,7 @@ async function ajaxPoiRegionSearch(poiRegion) {
         const result = poi.recommendations;
         const position = [poi.lat, poi.lon];
         const marker = L.marker(position).addTo(map);
-        map.setView(position, 9);
+        map.setView(position, 12);
         //document.getElementById('newReviewDiv').style.display = "block";
         
         marker.bindPopup(`This is the town of ${poi.name}. It is ${poi.description} \n 
