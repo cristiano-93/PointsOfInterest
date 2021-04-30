@@ -1,13 +1,3 @@
-//                  Notes
-//
-//      apply same changes to poi create form that were applied to review creating form
-//      try to fix the logout button being displayed when not logged in.
-//      style the header
-//      arranje the routes properly in seperate files
-//      fix the login/logout that if we change page it will ask for login even if already logged in
-//
-//const http = require("http");
-
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');

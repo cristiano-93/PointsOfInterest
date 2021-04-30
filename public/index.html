@@ -113,7 +113,6 @@
                     <form id="searchForm" action="get">
                         <input id="poiRegion" type="text">
                         <input id="ajaxButton" type="button" value="submit">
-                        <!-- onclick="document.getElementById('reviewMessage').style.display = 'none' -->
                     </form>
 
                     <div id="map1" style="width:600px; height:500px"> map</div>
@@ -175,39 +174,6 @@
             <div class="row">
                 <div id="results"></div>
             </div>
-
-            <!-- Code to be removed once everything is confirmed to be working as it should -->
-
-            <!-- <div id="reviewDiv" style="display: none;">
-            <form action="" method="post" onsubmit="addReview(),event.preventDefault(),document.getElementById('reviewDiv').style.display = 'none',
-                document.getElementById('reviewMessage').style.display = 'block'">
-                <div class="container">
-                    <h5 style="color: green;font-weight:bold ; " id="reviewConfirm" style="display: none;">Review has
-                        been Created</h5>
-                    <div class="row">
-                        <div class="col-sm">
-                            <h4 style="margin-left: 50px;"> Create Review</h4>
-                            <h6>POI id: </h6>
-                            <input type="number" name="poi_id" id="poi_id" style="margin-left: 40px;" required disabled>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md">
-                            <h6>Review: </h6>
-                            <textarea name="review" id="review" cols="50" rows="5" style="margin-left: 40px;"
-                                required></textarea>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn btn-primary" type="submit" id="reviewBtn" style="margin-left: 125px;">Add
-                    Review</button>
-            </form>
-
-            <button class="btn btn-primary" id="reviewCancel" style="margin-left: 125px;">Cancel</button>
-        </div> -->
-            <!-- <div class="row">
-            <div id="reviewMessage" style="display: none; color: green; font-weight: bold;">Review has been Created</div>
-        </div> -->
         </div>
         <script src="ajax.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

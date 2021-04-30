@@ -74,7 +74,6 @@ async function ajaxPoiRegionSearch(poiRegion) {
         const position = [poi.lat, poi.lon];
         const marker = L.marker(position).addTo(map);
         map.setView(position, 12);
-        //document.getElementById('newReviewDiv').style.display = "block";
         
         marker.bindPopup(`This is the town of ${poi.name}. It is ${poi.description} \n 
         <h6 style="margin-left: 50px">Add a Review</h6>\n

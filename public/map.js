@@ -10,6 +10,5 @@ const pos = [40.91842, -8.51741];
 map.setView(pos, 14);
 
 map.on("click", e => {
-	// "e.latlng" is an object (of type L.LatLng) representing the mouse click 
     L.marker([e.latlng.lat,e.latlng.lng]).addTo(map);
 });
